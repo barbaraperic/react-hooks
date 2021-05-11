@@ -1,0 +1,11 @@
+.App {
+  width: 200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  width: 200px;
+  height: 100px;
+}
