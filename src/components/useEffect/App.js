@@ -15,9 +15,19 @@ import "./styles.css"
 */
 
 function App() {
+  const [input, setInput] = React.useState("");
+
+  React.useEffect(() => {
+    document.title = `You have ${240 - input.length} characters left`
+  }, [input])
+  
   return (
     <div className="App">
-      <textarea />
+      <textarea
+        value={input}
+        type="text"
+        onChange={(e) => setInput(e.target.value)}
+      ></textarea>
       <button>Submit</button> 
     </div>
   );
