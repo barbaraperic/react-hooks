@@ -30,9 +30,55 @@ function fetchPost (id) {
 }
 
 function App() {
+  const [index, setIndex] = React.useState(0)
+  const [post, setPost] = React.useState(null)
+  const [loading, setLoading] = React.useState(true)
+  const [error, setError] = React.useState(null)
+
+  React.useEffect(() => {
+    setLoading(true)
+    fetchPost(postIds[index])
+      .then((data) => {
+        setPost(data)
+        setLoading(false)
+        setError(false)
+      })
+      .catch((e) => {
+        setError(true)
+        console.error(e)
+      })
+  },[index])
+
+  const incrementIndex = () => {
+    setIndex((i) =>
+      i === postIds.length - 1
+        ? i
+        : i + 1
+    )
+  }
+
+  if (loading) {
+    return <p>Loading</p>
+  }
+
+  if (error) {
+    return (
+      <React.Fragment>
+        <p>error</p>
+        <button onClick={incrementIndex}>Next Post</button>
+      </React.Fragment>
+    )
+  }
+
   return (
     <div className="App">
-      Read the instructions.
+      <h2>{post.title}</h2>
+      <p>{post.body}</p>
+      {index === postIds.length - 1
+        ? <p>No more posts</p>
+        : <button onClick={incrementIndex}>
+          Next Post
+          </button>}
     </div>
   );
 }
