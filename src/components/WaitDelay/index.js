@@ -5,33 +5,37 @@ import "./styles.css";
 
 /*
   Instructions:
-    You'll notice below that we have a Wait component.
-    The purpose of Wait is to render the `ui` prop after
-    `delay` seconds. Before `delay` seconds, it should
-    render `placeholder`.
+    Finish implementing the `useWait` custom Hook.
+    `useWait` should return a boolean that changes from
+    `false` to `true` after `delay` seconds. 
 */
 
-function Wait ({ delay = 1000, placeholder, ui }) {
-  const [show, setShow] = React.useState(false);
+function useWait (delay) {
+  const [show, setShow] = React.useState(false)
+
   React.useEffect(() => {
-    
     const id = window.setTimeout(() => {
       setShow(true)
     }, delay)
 
     return () => window.clearTimeout(id)
-
   }, [delay])
 
-  return show === true 
-  ? ui
-  : placeholder
+  return show;
+}
+
+function Wait({ delay = 1000, placeholder, ui }) {
+  const show = useWait(delay)
+
+  return show === true
+    ? ui
+    : placeholder
 }
 
 function App() {
   return (
     <div className="App">
-      <Wait 
+      <Wait
         delay={3000}
         placeholder={<p>Waiting...</p>}
         ui={<p>This text should appear after 3 seconds.</p>}
