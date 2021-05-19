@@ -19,12 +19,20 @@ import "./styles.css";
 */
 
 function Form() {
-  const handleSubmit = e => {
+  const nameRef = React.useRef("");
+  const emailRef = React.useRef("");
+  const passwordRef = React.useRef("");
 
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(nameRef.current.value, passwordRef.current.value, emailRef.current.value)
   }
 
   const handleReset = () => {
-
+    nameRef.current.value = ""
+    emailRef.current.value = ""
+    passwordRef.current.value = ""
   }
 
   return (
@@ -34,6 +42,7 @@ function Form() {
         <input
           placeholder="name"
           type="text"
+          ref={nameRef}
         />
       </label>
       <label>
@@ -41,6 +50,7 @@ function Form() {
         <input
           placeholder="email"
           type="text"
+          ref={emailRef}
         />
       </label>
       <label>
@@ -48,25 +58,26 @@ function Form() {
         <input
           placeholder="password"
           type="text"
+          ref={passwordRef}
         />
       </label>
 
       <hr />
 
-      <button>
+      <button onClick={() => nameRef.current.focus()}>
         Focus Name Input
       </button>
-      <button>
+      <button onClick={() => emailRef.current.focus()}>
         Focus Email Input
       </button>
-      <button>
+      <button onClick={() => passwordRef.current.focus()}>
         Focus Password Input
       </button>
 
       <hr />
 
-      <button>Submit</button>
-      <button>Reset</button>
+      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleReset}>Reset</button>
     </React.Fragment>
   )
 }
