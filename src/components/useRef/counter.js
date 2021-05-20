@@ -15,9 +15,23 @@ import "./styles.css";
 */
 
 function CounterGame () {
+  const [timer, setTimer] = React.useState(10)
+  const [timesClicked, setTimesClicked] = React.useState(0)
+
+  React.useEffect(() => {
+    const interval = window.setInterval(() => {
+     return setTimer((timer) => timer - 1 )
+    }, 1000)
+
+    return () => window.clearTimeout(interval)
+  }, [timer])
+
+
   return (
     <div className="App">
-      See instructions.
+      <button>Click me</button>
+      <p>{timer}</p>
+      <p>{timesClicked}</p>
     </div>
   );
 }
