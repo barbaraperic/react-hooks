@@ -17,21 +17,36 @@ import "./styles.css";
 function CounterGame () {
   const [timer, setTimer] = React.useState(10)
   const [timesClicked, setTimesClicked] = React.useState(0)
+  const id = React.useRef(null)
+
+  const clear = () => window.clearInterval(id.current)
 
   React.useEffect(() => {
-    const interval = window.setInterval(() => {
-     return setTimer((timer) => timer - 1 )
+    id.current = window.setInterval(() => {
+      setTimer((time) => time - 1)
     }, 1000)
 
-    return () => window.clearTimeout(interval)
+    return clear
+  }, [])
+
+  React.useEffect(() => {
+    if (timer === 0) {
+      clear()
+    }
   }, [timer])
 
 
+  const handleClick = () => {
+    setTimesClicked((v) => v + 1)
+  }
+
   return (
     <div className="App">
-      <button>Click me</button>
-      <p>{timer}</p>
       <p>{timesClicked}</p>
+      {timer === 0 ? null : 
+        <button onClick={handleClick}>Click me</button>
+      }
+      <p>Time left: {timer} s</p>
     </div>
   );
 }
